@@ -54,18 +54,30 @@
         </section>
         <section>
             <h4>Gestión Oradores</h4>
+            <%
+            String fname = "";
+            String lname = "";
+            String email = "";
+            String phone = "";
+            if(request.getAttribute("phone")!=null){
+            	fname = request.getAttribute("fname").toString();
+            	lname = request.getAttribute("lname").toString();
+            	email = request.getAttribute("email").toString();
+            	phone = request.getAttribute("phone").toString();
+            };
+            %>
           <form method="get" class="form-reg">
             <div class="row">
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="inputFName" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" name="fname" id="inputFname" pattern="[A-Za-z]+">
+                  <input type="text" class="form-control" name="fname" id="inputFname" pattern="[A-Za-z]+" value="<%=fname%>">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="inputLName" class="form-label">Apellido</label>
-                  <input type="text" class="form-control" name="lname" id="inputLname" pattern=[A-Za-z]+>
+                  <input type="text" class="form-control" name="lname" id="inputLname" pattern=[A-Za-z]+ value="<%=lname%>">
                 </div>
               </div>
             </div>
@@ -73,14 +85,14 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="inputEmail1" class="form-label">Email address</label>
-                  <input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp">
+                  <input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp" value="<%=email%>">
                   <div id="emailHelp" class="form-text">Nunca compartiremos email con terceros.</div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="inputPhone" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" name="phone" id="inputPhone" pattern="[0-9]+">
+                  <input type="text" class="form-control" name="phone" id="inputPhone" pattern="[0-9]+" value="<%=phone%>">
                 </div>
               </div>
             </div>
@@ -137,6 +149,20 @@
     			});
     	}
     	// For read
+    	if(status_read =="Success"){
+    		Swal.fire({
+    			icon: "success",
+    			title: "Ok",
+    			text: "Lectura exitosa de la base de datos !!"
+    		});
+    	}
+    	if(status_read =="Fail"){
+    		Swal.fire({
+  			  icon: "error",
+  			  title: "Oops...",
+  			  text: "No existe usuario para email suministrado.\nSuministre otro email."
+  			});
+    	} 
     	
     	// For updateAll
     	if(status_updateAll == "Success"){

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCManagerOradores {
 	private String dbURL = "jdbc:mysql://localhost:3306/";
@@ -51,12 +53,19 @@ public class JDBCManagerOradores {
 			return false;
 		}
 	}
-	public ResultSet ReadOrador(String email) {
-		ResultSet data = null;
+	public ArrayList<String> ReadOrador(String email) {
+		ArrayList<String >data = new ArrayList<String>();
 		try(Connection connection = DriverManager.getConnection(dbURL+schema, dbUserName, dbPass);
 			PreparedStatement pst = connection.prepareStatement(queryRead)){
 			pst.setString(1, email);
-			data = pst.executeQuery();
+			ResultSet rst = pst.executeQuery();
+			while(rst.next()) {
+				data.add(rst.getString(2));
+				data.add(rst.getString(3));
+				data.add(rst.getString(4));
+				data.add(rst.getString(5));
+			}
+			
 		}catch(SQLException e) {
 			this.error = e.getMessage();;
 		}
